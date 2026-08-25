@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IDS e IPS: detección y prevención de intrusiones">
+  <title>IDS & IPS | Ciberseguridad</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="hero">
+  <nav class="nav container">
+    <a class="logo" href="#inicio">CYBER<span>DEFENSE</span></a>
+
+    <div class="nav-links">
+      <a href="#conceptos">Conceptos</a>
+      <a href="#diferencias">IDS vs IPS</a>
+      <a href="#funcionamiento">Funcionamiento</a>
+      <a href="#tipos">Tipos</a>
+    </div>
+  </nav>
+
+  <div class="hero-content container" id="inicio">
+
+    <div class="hero-text">
+      <p class="eyebrow">CIBERSEGURIDAD • REDES</p>
+
+      <h1>
+        IDS e IPS:
+        <br>
+        <span>detección y prevención</span>
+        de intrusiones
+      </h1>
+
+      <p class="lead">
+        Conoce cómo estas tecnologías supervisan el tráfico,
+        identifican comportamientos sospechosos y ayudan a
+        proteger redes y sistemas frente a incidentes de seguridad.
+      </p>
+
+      <div class="hero-buttons">
+        <a class="btn primary" href="#conceptos">
+          Explorar tema
+        </a>
+
+        <a class="btn ghost" href="#diferencias">
+          Ver diferencias
+        </a>
+      </div>
+    </div>
+
+    <!-- Ilustración SVG -->
+    <div class="hero-art">
+      <svg viewBox="0 0 560 420">
+
+        <defs>
+          <linearGradient id="gradient">
+            <stop offset="0" stop-color="#36e0c5"/>
+            <stop offset="1" stop-color="#6d7cff"/>
+          </linearGradient>
+        </defs>
+
+        <circle
+          cx="280"
+          cy="205"
+          r="92"
+          fill="#101a38"
+          stroke="url(#gradient)"
+          stroke-width="3"
+        />
+
+        <path
+          d="M280 125 L338 150 V205
+          C338 258 306 290 280 301
+          C254 290 222 258 222 205
+          V150 Z"
+          fill="none"
+          stroke="white"
+          stroke-width="6"
+        />
+
+        <path
+          d="M255 207 l18 18 37-42"
+          fill="none"
+          stroke="#36e0c5"
+          stroke-width="9"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+
+        <g stroke="#6d7cff" stroke-width="2">
+          <line x1="45" y1="90" x2="220" y2="155"/>
+          <line x1="45" y1="315" x2="220" y2="255"/>
+          <line x1="515" y1="90" x2="340" y2="155"/>
+          <line x1="515" y1="315" x2="340" y2="255"/>
+        </g>
+
+        <g fill="#182448" stroke="#36e0c5" stroke-width="2">
+          <rect x="20" y="55" width="70" height="48" rx="10"/>
+          <rect x="20" y="292" width="70" height="48" rx="10"/>
+          <rect x="470" y="55" width="70" height="48" rx="10"/>
+          <rect x="470" y="292" width="70" height="48" rx="10"/>
+        </g>
+
+      </svg>
+    </div>
+
+  </div>
+</header>
+
+
+<main>
+
+<!-- CONCEPTOS -->
+<section class="section container" id="conceptos">
+
+  <div class="section-title">
+
+    <p class="eyebrow">
+      01 • CONCEPTOS
+    </p>
+
+    <h2>
+      ¿Qué son IDS e IPS?
+    </h2>
+
+    <p>
+      Son tecnologías de seguridad que supervisan eventos
+      de sistemas o redes para encontrar señales de posibles
+      incidentes.
+    </p>
+
+  </div>
+
+
+  <div class="cards two">
+
+    <article class="card">
+
+      <div class="icon cyan">
+        IDS
+      </div>
+
+      <h3>
+        Intrusion Detection System
+      </h3>
+
+      <p>
+        Un <strong>IDS</strong> analiza la actividad y genera
+        alertas cuando encuentra indicios de comportamiento
+        sospechoso.
+      </p>
+
+      <span class="tag">
+        DETECTA • ALERTA • REGISTRA
+      </span>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="icon purple">
+        IPS
+      </div>
+
+      <h3>
+        Intrusion Prevention System
+      </h3>
+
+      <p>
+        Un <strong>IPS</strong> incorpora capacidades de
+        detección y puede intentar detener un incidente,
+        por ejemplo bloqueando tráfico sospechoso.
+      </p>
+
+      <span class="tag">
+        DETECTA • DECIDE • PREVIENE
+      </span>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- COMPARACIÓN -->
+<section class="section dark-section" id="diferencias">
+
+  <div class="container">
+
+    <div class="section-title center">
+
+      <p class="eyebrow">
+        02 • COMPARACIÓN
+      </p>
+
+      <h2>
+        IDS vs IPS
+      </h2>
+
+    </div>
+
+
+    <div class="comparison">
+
+      <div class="compare-head">
+        <span>Característica</span>
+        <span>IDS</span>
+        <span>IPS</span>
+      </div>
+
+      <div class="compare-row">
+        <span>Detecta actividad sospechosa</span>
+        <b>✓</b>
+        <b>✓</b>
+      </div>
+
+      <div class="compare-row">
+        <span>Genera alertas</span>
+        <b>✓</b>
+        <b>✓</b>
+      </div>
+
+      <div class="compare-row">
+        <span>Intenta bloquear amenazas</span>
+        <b>—</b>
+        <b>✓</b>
+      </div>
+
+      <div class="compare-row">
+        <span>Supervisa eventos</span>
+        <b>✓</b>
+        <b>✓</b>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FUNCIONAMIENTO -->
+<section class="section container" id="funcionamiento">
+
+  <div class="section-title">
+
+    <p class="eyebrow">
+      03 • FUNCIONAMIENTO
+    </p>
+
+    <h2>
+      ¿Cómo funcionan?
+    </h2>
+
+    <p>
+      El proceso puede entenderse como una cadena de
+      observación, análisis y respuesta.
+    </p>
+
+  </div>
+
+
+  <div class="flow">
+
+    <div class="flow-step">
+      <span>01</span>
+      <h3>Observación</h3>
+      <p>
+        Se recopilan eventos y tráfico de red.
+      </p>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="flow-step">
+      <span>02</span>
+      <h3>Análisis</h3>
+      <p>
+        Se comparan los eventos con reglas,
+        firmas o patrones.
+      </p>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="flow-step">
+      <span>03</span>
+      <h3>Detección</h3>
+      <p>
+        Se identifica una posible actividad
+        maliciosa.
+      </p>
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="flow-step">
+      <span>04</span>
+      <h3>Respuesta</h3>
+      <p>
+        El IDS alerta y el IPS puede aplicar
+        una acción preventiva.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="network-visual">
+
+    <div class="node">
+      🌐
+      <small>Internet</small>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="node shield">
+      🛡️
+      <small>IDS / IPS</small>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="node">
+      🖥️
+      <small>Red interna</small>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TIPOS -->
+<section class="section alt" id="tipos">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <p class="eyebrow">
+        04 • CLASIFICACIÓN
+      </p>
+
+      <h2>
+        Principales tipos de IDPS
+      </h2>
+
+    </div>
+
+
+    <div class="cards four">
+
+      <article class="mini-card">
+        <span>01</span>
+        <h3>Basado en red</h3>
+        <p>
+          Supervisa segmentos de red y actividad
+          de protocolos.
+        </p>
+      </article>
+
+
+      <article class="mini-card">
+        <span>02</span>
+        <h3>Basado en host</h3>
+        <p>
+          Observa actividades de un equipo
+          o servidor.
+        </p>
+      </article>
+
+
+      <article class="mini-card">
+        <span>03</span>
+        <h3>Red inalámbrica</h3>
+        <p>
+          Analiza actividad asociada con
+          comunicaciones inalámbricas.
+        </p>
+      </article>
+
+
+      <article class="mini-card">
+        <span>04</span>
+        <h3>Comportamiento de red</h3>
+        <p>
+          Busca patrones o comportamientos
+          anómalos.
+        </p>
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- AMENAZAS -->
+<section class="section container">
+
+  <div class="section-title">
+
+    <p class="eyebrow">
+      05 • DETECCIÓN
+    </p>
+
+    <h2>
+      ¿Qué puede identificar?
+    </h2>
+
+  </div>
+
+
+  <div class="threat-grid">
+
+    <div class="threat">
+      <strong>Escaneo de puertos</strong>
+      <span>
+        Actividad que puede indicar reconocimiento
+        de servicios.
+      </span>
+    </div>
+
+
+    <div class="threat">
+      <strong>Malware</strong>
+      <span>
+        Patrones asociados con software malicioso.
+      </span>
+    </div>
+
+
+    <div class="threat">
+      <strong>Intentos de acceso</strong>
+      <span>
+        Comportamientos que pueden indicar
+        accesos no autorizados.
+      </span>
+    </div>
+
+
+    <div class="threat">
+      <strong>Vulnerabilidades</strong>
+      <span>
+        Intentos de aprovechar debilidades
+        conocidas.
+      </span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- IMPORTANCIA -->
+<section class="section dark-section">
+
+  <div class="container benefits">
+
+    <div>
+
+      <p class="eyebrow">
+        06 • IMPORTANCIA
+      </p>
+
+      <h2>
+        Una capa más de defensa
+      </h2>
+
+      <p>
+        IDS e IPS forman parte de una estrategia de
+        ciberseguridad más amplia. Pueden trabajar junto
+        con firewalls, autenticación, gestión de
+        vulnerabilidades y respuesta a incidentes.
+      </p>
+
+    </div>
+
+
+    <div class="check-list">
+
+      <div>
+        ✓ Mayor visibilidad de eventos
+      </div>
+
+      <div>
+        ✓ Alertas de actividad sospechosa
+      </div>
+
+      <div>
+        ✓ Registro de incidentes
+      </div>
+
+      <div>
+        ✓ Respuesta preventiva con IPS
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FUENTES -->
+<section class="section container sources">
+
+  <div class="section-title">
+
+    <p class="eyebrow">
+      07 • FUENTES
+    </p>
+
+    <h2>
+      Referencias
+    </h2>
+
+  </div>
+
+  <p>
+    Contenido elaborado con base en documentación técnica
+    del NIST sobre sistemas de detección y prevención
+    de intrusiones.
+  </p>
+
+  <a
+    href="https://www.nist.gov/publications/guide-intrusion-detection-and-prevention-systems-idps"
+    target="_blank">
+    NIST — Guide to Intrusion Detection and Prevention Systems
+  </a>
+
+</section>
+
+</main>
+
+
+<footer>
+
+  <div class="container footer-inner">
+
+    <div>
+      <strong>CYBERDEFENSE</strong>
+      <p>
+        Proyecto educativo • IDS & IPS
+      </p>
+    </div>
+
+    <div class="footer-badge">
+      IDS <span>+</span> IPS
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
