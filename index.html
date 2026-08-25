@@ -1,1157 +1,1956 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IDS e IPS: detección y prevención de intrusiones">
-  <title>IDS & IPS | Ciberseguridad</title>
-  <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IDS & IPS | Ciberseguridad</title>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+        :root {
+            --dark: #050a18;
+            --panel: #101d3d;
+            --cyan: #22e6c5;
+            --purple: #7167ff;
+            --white: #ffffff;
+            --text: #18213a;
+            --muted: #69758c;
+            --border: #e1e6ef;
+            --max-width: 1150px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", Arial, sans-serif;
+            background: #f7f9fc;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(var(--max-width), 92%);
+            margin: auto;
+        }
+
+        h1, h2, h3 {
+            font-family: "Space Grotesk", sans-serif;
+            line-height: 1.1;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .hero {
+            min-height: 720px;
+            color: white;
+            background:
+                radial-gradient(
+                    circle at 75% 30%,
+                    #182b66 0%,
+                    #0a1533 40%,
+                    #040914 100%
+                );
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: .12;
+
+            background-image:
+                linear-gradient(#ffffff 1px, transparent 1px),
+                linear-gradient(90deg, #ffffff 1px, transparent 1px);
+
+            background-size: 60px 60px;
+        }
+
+        .navbar {
+            height: 85px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .nav-content {
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #cbd5ea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: .3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan);
+        }
+
+        /* ================= HERO ================= */
+
+        .hero-content {
+            min-height: 635px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            align-items: center;
+
+            gap: 45px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 8px 13px;
+
+            border-radius: 50px;
+
+            background: #22e6c51a;
+
+            border: 1px solid #22e6c550;
+
+            color: var(--cyan);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size:
+                clamp(44px, 6vw, 70px);
+
+            letter-spacing: -2px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--cyan);
+        }
+
+        .hero-text > p {
+            max-width: 650px;
+
+            color: #b5c2dc;
+
+            font-size: 17px;
+        }
+
+        .hero-buttons {
+            display: flex;
+
+            gap: 13px;
+
+            margin-top: 32px;
+        }
+
+        .btn {
+            padding: 14px 21px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            transition: .3s;
+        }
+
+        .btn-primary {
+            background: var(--cyan);
+
+            color: #06121b;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 30px #22e6c440;
+        }
+
+        .btn-secondary {
+            border: 1px solid #40517b;
+
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--cyan);
+
+            color: var(--cyan);
+        }
+
+        /* ================= ILUSTRACIÓN ================= */
+
+        .security-image svg {
+            width: 100%;
+
+            max-width: 550px;
+
+            display: block;
+
+            margin: auto;
+        }
+
+        /* ================= SECCIONES ================= */
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section.dark {
+            background: var(--dark);
+
+            color: white;
+        }
+
+        .section.light {
+            background: #eef2f8;
+        }
+
+        .section-heading {
+            max-width: 760px;
+
+            margin-bottom: 45px;
+        }
+
+        .section-heading.center {
+            text-align: center;
+
+            margin-left: auto;
+
+            margin-right: auto;
+        }
+
+        .section-heading > span,
+        .section-label {
+            color: var(--purple);
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+        }
+
+        .dark .section-heading > span,
+        .dark .section-label {
+            color: var(--cyan);
+        }
+
+        .section-heading h2 {
+            font-size:
+                clamp(34px, 5vw, 52px);
+
+            margin-top: 12px;
+
+            margin-bottom: 17px;
+        }
+
+        /* ================= TARJETAS ================= */
+
+        .cards {
+            display: grid;
+
+            gap: 25px;
+        }
+
+        .cards.two {
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+        .cards.four,
+        .steps,
+        .threats {
+            grid-template-columns:
+                repeat(4, 1fr);
+        }
+
+        .security-card,
+        .step,
+        .type-card,
+        .threat {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 20px 50px #26395b0d;
+
+            transition: .3s;
+        }
+
+        .security-card:hover,
+        .type-card:hover,
+        .threat:hover {
+            transform: translateY(-7px);
+        }
+
+        .card-icon {
+            width: 65px;
+
+            height: 65px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 17px;
+
+            font-weight: 800;
+
+            margin-bottom: 22px;
+        }
+
+        .card-icon.cyan {
+            background: #22e6c51c;
+
+            color: #079e89;
+        }
+
+        .card-icon.purple {
+            background: #7167ff18;
+
+            color: #5b53d5;
+        }
+
+        .security-card h3 {
+            font-size: 23px;
+
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: var(--muted);
+        }
+
+        .features {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 22px;
+        }
+
+        .features span {
+            background: #f0f3f8;
+
+            color: #59667d;
+
+            padding: 7px 11px;
+
+            border-radius: 50px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        /* ================= TABLA ================= */
+
+        .comparison-table {
+            border: 1px solid #263758;
+
+            border-radius: 17px;
+
+            overflow: hidden;
+        }
+
+        .table-header,
+        .table-row {
+            display: grid;
+
+            grid-template-columns:
+                2fr 1fr 1fr;
+        }
+
+        .table-header {
+            background: #111e3c;
+
+            color: white;
+
+            font-weight: 800;
+        }
+
+        .table-header div,
+        .table-row div {
+            padding: 18px 22px;
+        }
+
+        .table-row {
+            border-top: 1px solid #263758;
+
+            color: #cbd5e8;
+        }
+
+        .table-row div:not(:first-child) {
+            text-align: center;
+        }
+
+        .yes {
+            color: var(--cyan);
+
+            font-weight: 800;
+        }
+
+        .no {
+            color: #71809c;
+        }
+
+        /* ================= FUNCIONAMIENTO ================= */
+
+        .steps,
+        .threats {
+            display: grid;
+
+            gap: 18px;
+        }
+
+        .number,
+        .type-number {
+            color: var(--purple);
+
+            font-weight: 800;
+
+            font-size: 13px;
+
+            margin-bottom: 15px;
+        }
+
+        .step h3,
+        .type-card h3,
+        .threat h3 {
+            margin-bottom: 10px;
+        }
+
+        /* ================= DIAGRAMA ================= */
+
+        .network {
+            max-width: 900px;
+
+            margin: 65px auto 0;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+        .network-node {
+            width: 170px;
+
+            min-height: 135px;
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 4px;
+
+            box-shadow:
+                0 15px 35px #27395c10;
+        }
+
+        .network-node strong {
+            font-family:
+                "Space Grotesk",
+                sans-serif;
+        }
+
+        .network-node small {
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        .node-icon {
+            font-size: 32px;
+        }
+
+        .network-node.protected {
+            border: 2px solid var(--cyan);
+
+            background: #ecfffb;
+        }
+
+        .connection {
+            width: 100px;
+
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--cyan),
+                    var(--purple)
+                );
+        }
+
+        /* ================= AMENAZAS ================= */
+
+        .threat-icon {
+            font-size: 30px;
+
+            margin-bottom: 15px;
+        }
+
+        /* ================= IMPORTANCIA ================= */
+
+        .importance {
+            display: grid;
+
+            grid-template-columns:
+                1.2fr .8fr;
+
+            gap: 70px;
+
+            align-items: center;
+        }
+
+        .importance h2 {
+            margin-top: 15px;
+
+            margin-bottom: 20px;
+
+            font-size:
+                clamp(34px, 5vw, 52px);
+        }
+
+        .security-list {
+            display: grid;
+
+            gap: 13px;
+        }
+
+        .security-list div {
+            background: #0e1934;
+
+            border: 1px solid #263757;
+
+            border-radius: 11px;
+
+            padding: 16px 18px;
+
+            color: #dbe4f6;
+        }
+
+        .security-list span {
+            color: var(--cyan);
+
+            font-weight: 800;
+
+            margin-right: 8px;
+        }
+
+        /* ================= CONCLUSIÓN ================= */
+
+        .conclusion {
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef3ff,
+                    #f7fffd
+                );
+        }
+
+        .conclusion-box {
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 25px;
+
+            padding: 50px;
+
+            display: flex;
+
+            gap: 35px;
+
+            align-items: center;
+
+            box-shadow:
+                0 20px 60px #27395c0b;
+        }
+
+        .conclusion-icon {
+            min-width: 80px;
+
+            height: 80px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 20px;
+
+            background: #22e6c51c;
+
+            font-size: 38px;
+        }
+
+        .conclusion-box > div:last-child > span {
+            color: var(--purple);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+        }
+
+        .conclusion h2 {
+            font-size: 34px;
+
+            margin: 10px 0 15px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #030712;
+
+            color: #8290a9;
+
+            padding: 45px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
+        }
+
+        .footer-info h3 {
+            color: white;
+
+            font-family:
+                "Space Grotesk",
+                sans-serif;
+
+            font-size: 23px;
+
+            margin-bottom: 8px;
+        }
+
+        .footer-info h3 span {
+            color: var(--cyan);
+        }
+
+        .footer-info p {
+            color: #71809b;
+
+            font-size: 13px;
+
+            margin: 5px 0;
+        }
+
+        .footer-info .author {
+            margin-top: 12px;
+
+            color: #aab6cc;
+        }
+
+        .footer-info .author strong {
+            color: var(--cyan);
+        }
+
+        .footer-badge {
+            border: 1px solid #263758;
+
+            border-radius: 50px;
+
+            padding: 12px 20px;
+
+            color: white;
+
+            font-weight: 700;
+        }
+
+        .footer-badge span {
+            color: var(--cyan);
+
+            margin: 0 4px;
+        }
+
+        .copyright {
+            text-align: center;
+
+            border-top: 1px solid #17243e;
+
+            margin-top: 30px;
+
+            padding-top: 20px;
+
+            font-size: 12px;
+
+            color: #596781;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+
+                padding: 60px 0;
+            }
+
+            .cards.four,
+            .steps,
+            .threats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .importance {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .section {
+                padding: 75px 0;
+            }
+
+            .hero h1 {
+                font-size: 44px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+            .cards.two,
+            .cards.four,
+            .steps,
+            .threats {
+                grid-template-columns: 1fr;
+            }
+
+            .table-header,
+            .table-row {
+                grid-template-columns:
+                    1.6fr .7fr .7fr;
+
+                font-size: 13px;
+            }
+
+            .table-header div,
+            .table-row div {
+                padding: 14px 9px;
+            }
+
+            .network {
+                flex-direction: column;
+            }
+
+            .connection {
+                width: 3px;
+
+                height: 55px;
+            }
+
+            .conclusion-box {
+                padding: 30px;
+
+                flex-direction: column;
+
+                text-align: center;
+            }
+
+            .footer-content {
+                flex-direction: column;
+
+                text-align: center;
+            }
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<header class="hero">
-  <nav class="nav container">
-    <a class="logo" href="#inicio">CYBER<span>DEFENSE</span></a>
 
-    <div class="nav-links">
-      <a href="#conceptos">Conceptos</a>
-      <a href="#diferencias">IDS vs IPS</a>
-      <a href="#funcionamiento">Funcionamiento</a>
-      <a href="#tipos">Tipos</a>
+<!-- ================= INICIO ================= -->
+
+<header class="hero" id="inicio">
+
+    <nav class="navbar">
+
+        <div class="container nav-content">
+
+            <a href="#inicio" class="logo">
+                CYBER<span>SECURITY</span>
+            </a>
+
+            <div class="nav-links">
+
+                <a href="#inicio">Inicio</a>
+
+                <a href="#conceptos">Conceptos</a>
+
+                <a href="#comparacion">IDS vs IPS</a>
+
+                <a href="#funcionamiento">
+                    Funcionamiento
+                </a>
+
+                <a href="#tipos">Tipos</a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <div class="container hero-content">
+
+
+        <div class="hero-text">
+
+            <div class="badge">
+                🔐 CIBERSEGURIDAD Y REDES
+            </div>
+
+
+            <h1>
+
+                IDS e IPS:
+
+                <span>
+                    detección y prevención
+                </span>
+
+                de intrusiones
+
+            </h1>
+
+
+            <p>
+
+                Descubre cómo los sistemas IDS e IPS ayudan
+                a detectar actividades sospechosas y proteger
+                las redes informáticas frente a posibles amenazas.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#conceptos"
+                    class="btn btn-primary">
+
+                    Explorar
+
+                </a>
+
+
+                <a
+                    href="#comparacion"
+                    class="btn btn-secondary">
+
+                    Comparar IDS e IPS
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- ILUSTRACIÓN -->
+
+        <div class="security-image">
+
+            <svg viewBox="0 0 500 450">
+
+                <defs>
+
+                    <linearGradient
+                        id="gradientShield"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%">
+
+                        <stop
+                            offset="0%"
+                            stop-color="#22e6c5"/>
+
+                        <stop
+                            offset="100%"
+                            stop-color="#7167ff"/>
+
+                    </linearGradient>
+
+                </defs>
+
+
+                <circle
+                    cx="250"
+                    cy="220"
+                    r="150"
+                    fill="#17244c"
+                    opacity=".5"/>
+
+
+                <circle
+                    cx="250"
+                    cy="220"
+                    r="115"
+                    fill="#101b3c"
+                    stroke="#263b70"
+                    stroke-width="2"/>
+
+
+                <path
+                    d="M250 110
+                    L335 145
+                    V220
+                    C335 285 292 325 250 345
+                    C208 325 165 285 165 220
+                    V145 Z"
+
+                    fill="#0c1632"
+
+                    stroke="url(#gradientShield)"
+
+                    stroke-width="7"/>
+
+
+                <path
+                    d="M205 220
+                    L238 253
+                    L300 180"
+
+                    fill="none"
+
+                    stroke="#22e6c5"
+
+                    stroke-width="13"
+
+                    stroke-linecap="round"
+
+                    stroke-linejoin="round"/>
+
+
+                <g
+                    stroke="#7167ff"
+                    stroke-width="3">
+
+                    <line
+                        x1="70"
+                        y1="100"
+                        x2="170"
+                        y2="160"/>
+
+                    <line
+                        x1="70"
+                        y1="340"
+                        x2="170"
+                        y2="280"/>
+
+                    <line
+                        x1="430"
+                        y1="100"
+                        x2="330"
+                        y2="160"/>
+
+                    <line
+                        x1="430"
+                        y1="340"
+                        x2="330"
+                        y2="280"/>
+
+                </g>
+
+
+                <g
+                    fill="#101b3c"
+                    stroke="#22e6c5"
+                    stroke-width="3">
+
+                    <rect
+                        x="30"
+                        y="65"
+                        width="75"
+                        height="55"
+                        rx="12"/>
+
+                    <rect
+                        x="30"
+                        y="315"
+                        width="75"
+                        height="55"
+                        rx="12"/>
+
+                    <rect
+                        x="395"
+                        y="65"
+                        width="75"
+                        height="55"
+                        rx="12"/>
+
+                    <rect
+                        x="395"
+                        y="315"
+                        width="75"
+                        height="55"
+                        rx="12"/>
+
+                </g>
+
+
+                <g fill="#22e6c5">
+
+                    <circle
+                        cx="67"
+                        cy="92"
+                        r="8"/>
+
+                    <circle
+                        cx="67"
+                        cy="342"
+                        r="8"/>
+
+                    <circle
+                        cx="432"
+                        cy="92"
+                        r="8"/>
+
+                    <circle
+                        cx="432"
+                        cy="342"
+                        r="8"/>
+
+                </g>
+
+            </svg>
+
+        </div>
+
     </div>
-  </nav>
 
-  <div class="hero-content container" id="inicio">
-
-    <div class="hero-text">
-      <p class="eyebrow">CIBERSEGURIDAD • REDES</p>
-
-      <h1>
-        IDS e IPS:
-        <br>
-        <span>detección y prevención</span>
-        de intrusiones
-      </h1>
-
-      <p class="lead">
-        Conoce cómo estas tecnologías supervisan el tráfico,
-        identifican comportamientos sospechosos y ayudan a
-        proteger redes y sistemas frente a incidentes de seguridad.
-      </p>
-
-      <div class="hero-buttons">
-        <a class="btn primary" href="#conceptos">
-          Explorar tema
-        </a>
-
-        <a class="btn ghost" href="#diferencias">
-          Ver diferencias
-        </a>
-      </div>
-    </div>
-
-    <!-- Ilustración SVG -->
-    <div class="hero-art">
-      <svg viewBox="0 0 560 420">
-
-        <defs>
-          <linearGradient id="gradient">
-            <stop offset="0" stop-color="#36e0c5"/>
-            <stop offset="1" stop-color="#6d7cff"/>
-          </linearGradient>
-        </defs>
-
-        <circle
-          cx="280"
-          cy="205"
-          r="92"
-          fill="#101a38"
-          stroke="url(#gradient)"
-          stroke-width="3"
-        />
-
-        <path
-          d="M280 125 L338 150 V205
-          C338 258 306 290 280 301
-          C254 290 222 258 222 205
-          V150 Z"
-          fill="none"
-          stroke="white"
-          stroke-width="6"
-        />
-
-        <path
-          d="M255 207 l18 18 37-42"
-          fill="none"
-          stroke="#36e0c5"
-          stroke-width="9"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-
-        <g stroke="#6d7cff" stroke-width="2">
-          <line x1="45" y1="90" x2="220" y2="155"/>
-          <line x1="45" y1="315" x2="220" y2="255"/>
-          <line x1="515" y1="90" x2="340" y2="155"/>
-          <line x1="515" y1="315" x2="340" y2="255"/>
-        </g>
-
-        <g fill="#182448" stroke="#36e0c5" stroke-width="2">
-          <rect x="20" y="55" width="70" height="48" rx="10"/>
-          <rect x="20" y="292" width="70" height="48" rx="10"/>
-          <rect x="470" y="55" width="70" height="48" rx="10"/>
-          <rect x="470" y="292" width="70" height="48" rx="10"/>
-        </g>
-
-      </svg>
-    </div>
-
-  </div>
 </header>
 
 
+<!-- ================= CONTENIDO ================= -->
+
 <main>
 
+
 <!-- CONCEPTOS -->
-<section class="section container" id="conceptos">
 
-  <div class="section-title">
+<section
+    class="section"
+    id="conceptos">
 
-    <p class="eyebrow">
-      01 • CONCEPTOS
-    </p>
-
-    <h2>
-      ¿Qué son IDS e IPS?
-    </h2>
-
-    <p>
-      Son tecnologías de seguridad que supervisan eventos
-      de sistemas o redes para encontrar señales de posibles
-      incidentes.
-    </p>
-
-  </div>
+    <div class="container">
 
 
-  <div class="cards two">
+        <div class="section-heading">
 
-    <article class="card">
-
-      <div class="icon cyan">
-        IDS
-      </div>
-
-      <h3>
-        Intrusion Detection System
-      </h3>
-
-      <p>
-        Un <strong>IDS</strong> analiza la actividad y genera
-        alertas cuando encuentra indicios de comportamiento
-        sospechoso.
-      </p>
-
-      <span class="tag">
-        DETECTA • ALERTA • REGISTRA
-      </span>
-
-    </article>
+            <span>
+                01 • CONCEPTOS
+            </span>
 
 
-    <article class="card">
+            <h2>
+                ¿Qué son IDS e IPS?
+            </h2>
 
-      <div class="icon purple">
-        IPS
-      </div>
 
-      <h3>
-        Intrusion Prevention System
-      </h3>
+            <p>
 
-      <p>
-        Un <strong>IPS</strong> incorpora capacidades de
-        detección y puede intentar detener un incidente,
-        por ejemplo bloqueando tráfico sospechoso.
-      </p>
+                Ambos son sistemas utilizados en
+                ciberseguridad para supervisar la actividad
+                de una red o sistema y responder ante
+                posibles amenazas.
 
-      <span class="tag">
-        DETECTA • DECIDE • PREVIENE
-      </span>
+            </p>
 
-    </article>
+        </div>
 
-  </div>
+
+        <div class="cards two">
+
+
+            <article class="security-card">
+
+                <div class="card-icon cyan">
+                    IDS
+                </div>
+
+
+                <h3>
+                    Sistema de Detección de Intrusiones
+                </h3>
+
+
+                <p>
+
+                    El <strong>IDS</strong> supervisa la
+                    actividad de una red o sistema y busca
+                    señales de posibles ataques o
+                    comportamientos sospechosos.
+
+                </p>
+
+
+                <div class="features">
+
+                    <span>✓ Detecta</span>
+
+                    <span>✓ Analiza</span>
+
+                    <span>✓ Genera alertas</span>
+
+                </div>
+
+            </article>
+
+
+            <article class="security-card">
+
+                <div class="card-icon purple">
+                    IPS
+                </div>
+
+
+                <h3>
+                    Sistema de Prevención de Intrusiones
+                </h3>
+
+
+                <p>
+
+                    El <strong>IPS</strong> realiza funciones
+                    similares al IDS, pero además puede
+                    intentar detener una actividad sospechosa
+                    mediante acciones preventivas.
+
+                </p>
+
+
+                <div class="features">
+
+                    <span>✓ Detecta</span>
+
+                    <span>✓ Analiza</span>
+
+                    <span>✓ Previene</span>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
 
 </section>
 
 
 <!-- COMPARACIÓN -->
-<section class="section dark-section" id="diferencias">
 
-  <div class="container">
+<section
+    class="section dark"
+    id="comparacion">
 
-    <div class="section-title center">
+    <div class="container">
 
-      <p class="eyebrow">
-        02 • COMPARACIÓN
-      </p>
 
-      <h2>
-        IDS vs IPS
-      </h2>
+        <div class="section-heading center">
+
+            <span>
+                02 • COMPARACIÓN
+            </span>
+
+
+            <h2>
+                IDS vs IPS
+            </h2>
+
+
+            <p>
+
+                Aunque están relacionados, existe una
+                diferencia importante entre ambos sistemas.
+
+            </p>
+
+        </div>
+
+
+        <div class="comparison-table">
+
+
+            <div class="table-header">
+
+                <div>
+                    Característica
+                </div>
+
+                <div>
+                    IDS
+                </div>
+
+                <div>
+                    IPS
+                </div>
+
+            </div>
+
+
+            <div class="table-row">
+
+                <div>
+                    Detecta actividad sospechosa
+                </div>
+
+                <div class="yes">
+                    ✓
+                </div>
+
+                <div class="yes">
+                    ✓
+                </div>
+
+            </div>
+
+
+            <div class="table-row">
+
+                <div>
+                    Genera alertas
+                </div>
+
+                <div class="yes">
+                    ✓
+                </div>
+
+                <div class="yes">
+                    ✓
+                </div>
+
+            </div>
+
+
+            <div class="table-row">
+
+                <div>
+                    Analiza el tráfico
+                </div>
+
+                <div class="yes">
+                    ✓
+                </div>
+
+                <div class="yes">
+                    ✓
+                </div>
+
+            </div>
+
+
+            <div class="table-row">
+
+                <div>
+                    Puede bloquear amenazas
+                </div>
+
+                <div class="no">
+                    —
+                </div>
+
+                <div class="yes">
+                    ✓
+                </div>
+
+            </div>
+
+
+            <div class="table-row">
+
+                <div>
+                    Función principal
+                </div>
+
+                <div>
+                    Detectar
+                </div>
+
+                <div>
+                    Prevenir
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div class="comparison">
-
-      <div class="compare-head">
-        <span>Característica</span>
-        <span>IDS</span>
-        <span>IPS</span>
-      </div>
-
-      <div class="compare-row">
-        <span>Detecta actividad sospechosa</span>
-        <b>✓</b>
-        <b>✓</b>
-      </div>
-
-      <div class="compare-row">
-        <span>Genera alertas</span>
-        <b>✓</b>
-        <b>✓</b>
-      </div>
-
-      <div class="compare-row">
-        <span>Intenta bloquear amenazas</span>
-        <b>—</b>
-        <b>✓</b>
-      </div>
-
-      <div class="compare-row">
-        <span>Supervisa eventos</span>
-        <b>✓</b>
-        <b>✓</b>
-      </div>
-
-    </div>
-
-  </div>
 
 </section>
 
 
 <!-- FUNCIONAMIENTO -->
-<section class="section container" id="funcionamiento">
 
-  <div class="section-title">
+<section
+    class="section"
+    id="funcionamiento">
 
-    <p class="eyebrow">
-      03 • FUNCIONAMIENTO
-    </p>
-
-    <h2>
-      ¿Cómo funcionan?
-    </h2>
-
-    <p>
-      El proceso puede entenderse como una cadena de
-      observación, análisis y respuesta.
-    </p>
-
-  </div>
+    <div class="container">
 
 
-  <div class="flow">
+        <div class="section-heading">
 
-    <div class="flow-step">
-      <span>01</span>
-      <h3>Observación</h3>
-      <p>
-        Se recopilan eventos y tráfico de red.
-      </p>
+            <span>
+                03 • FUNCIONAMIENTO
+            </span>
+
+
+            <h2>
+                ¿Cómo funcionan?
+            </h2>
+
+
+            <p>
+
+                El funcionamiento puede dividirse
+                en varias etapas.
+
+            </p>
+
+        </div>
+
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="number">
+                    01
+                </div>
+
+                <h3>
+                    Monitoreo
+                </h3>
+
+                <p>
+
+                    El sistema observa el tráfico y
+                    los eventos que ocurren en la red.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+                    02
+                </div>
+
+                <h3>
+                    Análisis
+                </h3>
+
+                <p>
+
+                    La información recopilada se analiza
+                    buscando patrones sospechosos.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+                    03
+                </div>
+
+                <h3>
+                    Detección
+                </h3>
+
+                <p>
+
+                    Se determina si existe una posible
+                    amenaza o comportamiento anormal.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+                    04
+                </div>
+
+                <h3>
+                    Respuesta
+                </h3>
+
+                <p>
+
+                    El IDS genera una alerta y el IPS
+                    puede aplicar una acción preventiva.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="network">
+
+
+            <div class="network-node">
+
+                <div class="node-icon">
+                    🌐
+                </div>
+
+                <strong>
+                    Internet
+                </strong>
+
+                <small>
+                    Tráfico externo
+                </small>
+
+            </div>
+
+
+            <div class="connection"></div>
+
+
+            <div class="network-node protected">
+
+                <div class="node-icon">
+                    🛡️
+                </div>
+
+                <strong>
+                    IDS / IPS
+                </strong>
+
+                <small>
+                    Seguridad
+                </small>
+
+            </div>
+
+
+            <div class="connection"></div>
+
+
+            <div class="network-node">
+
+                <div class="node-icon">
+                    💻
+                </div>
+
+                <strong>
+                    Red interna
+                </strong>
+
+                <small>
+                    Sistemas protegidos
+                </small>
+
+            </div>
+
+
+        </div>
+
     </div>
-
-    <div class="arrow">→</div>
-
-    <div class="flow-step">
-      <span>02</span>
-      <h3>Análisis</h3>
-      <p>
-        Se comparan los eventos con reglas,
-        firmas o patrones.
-      </p>
-    </div>
-
-    <div class="arrow">→</div>
-
-    <div class="flow-step">
-      <span>03</span>
-      <h3>Detección</h3>
-      <p>
-        Se identifica una posible actividad
-        maliciosa.
-      </p>
-    </div>
-
-    <div class="arrow">→</div>
-
-    <div class="flow-step">
-      <span>04</span>
-      <h3>Respuesta</h3>
-      <p>
-        El IDS alerta y el IPS puede aplicar
-        una acción preventiva.
-      </p>
-    </div>
-
-  </div>
-
-
-  <div class="network-visual">
-
-    <div class="node">
-      🌐
-      <small>Internet</small>
-    </div>
-
-    <div class="line"></div>
-
-    <div class="node shield">
-      🛡️
-      <small>IDS / IPS</small>
-    </div>
-
-    <div class="line"></div>
-
-    <div class="node">
-      🖥️
-      <small>Red interna</small>
-    </div>
-
-  </div>
 
 </section>
 
 
 <!-- TIPOS -->
-<section class="section alt" id="tipos">
 
-  <div class="container">
+<section
+    class="section light"
+    id="tipos">
 
-    <div class="section-title">
+    <div class="container">
 
-      <p class="eyebrow">
-        04 • CLASIFICACIÓN
-      </p>
 
-      <h2>
-        Principales tipos de IDPS
-      </h2>
+        <div class="section-heading">
+
+            <span>
+                04 • CLASIFICACIÓN
+            </span>
+
+
+            <h2>
+                Tipos de sistemas IDPS
+            </h2>
+
+
+            <p>
+
+                Los sistemas pueden clasificarse según
+                el lugar donde recopilan y analizan
+                la información.
+
+            </p>
+
+        </div>
+
+
+        <div class="cards four">
+
+
+            <article class="type-card">
+
+                <div class="type-number">
+                    01
+                </div>
+
+                <h3>
+                    Basado en red
+                </h3>
+
+                <p>
+
+                    Supervisa el tráfico de una red y
+                    busca actividades sospechosas.
+
+                </p>
+
+            </article>
+
+
+            <article class="type-card">
+
+                <div class="type-number">
+                    02
+                </div>
+
+                <h3>
+                    Basado en host
+                </h3>
+
+                <p>
+
+                    Supervisa la actividad de un equipo,
+                    servidor o dispositivo específico.
+
+                </p>
+
+            </article>
+
+
+            <article class="type-card">
+
+                <div class="type-number">
+                    03
+                </div>
+
+                <h3>
+                    Inalámbrico
+                </h3>
+
+                <p>
+
+                    Supervisa actividades relacionadas
+                    con redes inalámbricas.
+
+                </p>
+
+            </article>
+
+
+            <article class="type-card">
+
+                <div class="type-number">
+                    04
+                </div>
+
+                <h3>
+                    Comportamiento de red
+                </h3>
+
+                <p>
+
+                    Analiza patrones para identificar
+                    comportamientos anormales.
+
+                </p>
+
+            </article>
+
+
+        </div>
 
     </div>
-
-
-    <div class="cards four">
-
-      <article class="mini-card">
-        <span>01</span>
-        <h3>Basado en red</h3>
-        <p>
-          Supervisa segmentos de red y actividad
-          de protocolos.
-        </p>
-      </article>
-
-
-      <article class="mini-card">
-        <span>02</span>
-        <h3>Basado en host</h3>
-        <p>
-          Observa actividades de un equipo
-          o servidor.
-        </p>
-      </article>
-
-
-      <article class="mini-card">
-        <span>03</span>
-        <h3>Red inalámbrica</h3>
-        <p>
-          Analiza actividad asociada con
-          comunicaciones inalámbricas.
-        </p>
-      </article>
-
-
-      <article class="mini-card">
-        <span>04</span>
-        <h3>Comportamiento de red</h3>
-        <p>
-          Busca patrones o comportamientos
-          anómalos.
-        </p>
-      </article>
-
-    </div>
-
-  </div>
 
 </section>
 
 
 <!-- AMENAZAS -->
-<section class="section container">
 
-  <div class="section-title">
+<section class="section">
 
-    <p class="eyebrow">
-      05 • DETECCIÓN
-    </p>
-
-    <h2>
-      ¿Qué puede identificar?
-    </h2>
-
-  </div>
+    <div class="container">
 
 
-  <div class="threat-grid">
+        <div class="section-heading center">
 
-    <div class="threat">
-      <strong>Escaneo de puertos</strong>
-      <span>
-        Actividad que puede indicar reconocimiento
-        de servicios.
-      </span>
+            <span>
+                05 • SEGURIDAD
+            </span>
+
+
+            <h2>
+                ¿Qué pueden detectar?
+            </h2>
+
+        </div>
+
+
+        <div class="threats">
+
+
+            <div class="threat">
+
+                <div class="threat-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Escaneo de puertos
+                </h3>
+
+                <p>
+
+                    Actividad utilizada para conocer
+                    qué servicios están disponibles
+                    en una red.
+
+                </p>
+
+            </div>
+
+
+            <div class="threat">
+
+                <div class="threat-icon">
+                    🦠
+                </div>
+
+                <h3>
+                    Malware
+                </h3>
+
+                <p>
+
+                    Puede identificar patrones
+                    relacionados con software malicioso.
+
+                </p>
+
+            </div>
+
+
+            <div class="threat">
+
+                <div class="threat-icon">
+                    🔑
+                </div>
+
+                <h3>
+                    Accesos no autorizados
+                </h3>
+
+                <p>
+
+                    Permite identificar comportamientos
+                    asociados con accesos sospechosos.
+
+                </p>
+
+            </div>
+
+
+            <div class="threat">
+
+                <div class="threat-icon">
+                    🧩
+                </div>
+
+                <h3>
+                    Vulnerabilidades
+                </h3>
+
+                <p>
+
+                    Puede ayudar a detectar intentos de
+                    aprovechar debilidades de seguridad.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
     </div>
-
-
-    <div class="threat">
-      <strong>Malware</strong>
-      <span>
-        Patrones asociados con software malicioso.
-      </span>
-    </div>
-
-
-    <div class="threat">
-      <strong>Intentos de acceso</strong>
-      <span>
-        Comportamientos que pueden indicar
-        accesos no autorizados.
-      </span>
-    </div>
-
-
-    <div class="threat">
-      <strong>Vulnerabilidades</strong>
-      <span>
-        Intentos de aprovechar debilidades
-        conocidas.
-      </span>
-    </div>
-
-  </div>
 
 </section>
 
 
 <!-- IMPORTANCIA -->
-<section class="section dark-section">
 
-  <div class="container benefits">
+<section class="section dark">
 
-    <div>
+    <div class="container importance">
 
-      <p class="eyebrow">
-        06 • IMPORTANCIA
-      </p>
 
-      <h2>
-        Una capa más de defensa
-      </h2>
+        <div>
 
-      <p>
-        IDS e IPS forman parte de una estrategia de
-        ciberseguridad más amplia. Pueden trabajar junto
-        con firewalls, autenticación, gestión de
-        vulnerabilidades y respuesta a incidentes.
-      </p>
+            <span class="section-label">
+                06 • IMPORTANCIA
+            </span>
+
+
+            <h2>
+                Una capa adicional de protección
+            </h2>
+
+
+            <p>
+
+                Los IDS e IPS ayudan a aumentar la
+                visibilidad de lo que ocurre dentro
+                de una red. Al combinar detección,
+                análisis y respuesta, pueden formar
+                parte de una estrategia de seguridad
+                informática.
+
+            </p>
+
+        </div>
+
+
+        <div class="security-list">
+
+            <div>
+                <span>✓</span>
+                Detectar actividades sospechosas
+            </div>
+
+            <div>
+                <span>✓</span>
+                Generar alertas de seguridad
+            </div>
+
+            <div>
+                <span>✓</span>
+                Analizar el comportamiento de la red
+            </div>
+
+            <div>
+                <span>✓</span>
+                Prevenir determinados incidentes
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div class="check-list">
-
-      <div>
-        ✓ Mayor visibilidad de eventos
-      </div>
-
-      <div>
-        ✓ Alertas de actividad sospechosa
-      </div>
-
-      <div>
-        ✓ Registro de incidentes
-      </div>
-
-      <div>
-        ✓ Respuesta preventiva con IPS
-      </div>
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- FUENTES -->
-<section class="section container sources">
+<!-- CONCLUSIÓN -->
 
-  <div class="section-title">
+<section class="section conclusion">
 
-    <p class="eyebrow">
-      07 • FUENTES
-    </p>
+    <div class="container conclusion-box">
 
-    <h2>
-      Referencias
-    </h2>
 
-  </div>
+        <div class="conclusion-icon">
+            🛡️
+        </div>
 
-  <p>
-    Contenido elaborado con base en documentación técnica
-    del NIST sobre sistemas de detección y prevención
-    de intrusiones.
-  </p>
 
-  <a
-    href="https://www.nist.gov/publications/guide-intrusion-detection-and-prevention-systems-idps"
-    target="_blank">
-    NIST — Guide to Intrusion Detection and Prevention Systems
-  </a>
+        <div>
+
+            <span>
+                CONCLUSIÓN
+            </span>
+
+
+            <h2>
+                Detectar es importante.
+                Prevenir es aún mejor.
+            </h2>
+
+
+            <p>
+
+                Un IDS permite conocer cuándo ocurre
+                una actividad sospechosa, mientras que
+                un IPS añade capacidades para intentar
+                detener determinadas amenazas.
+
+            </p>
+
+        </div>
+
+
+    </div>
 
 </section>
+
 
 </main>
 
 
+<!-- ================= PIE DE PÁGINA ================= -->
+
 <footer>
 
-  <div class="container footer-inner">
+    <div class="container footer-content">
 
-    <div>
-      <strong>CYBERDEFENSE</strong>
-      <p>
-        Proyecto educativo • IDS & IPS
-      </p>
+
+        <div class="footer-info">
+
+            <h3>
+                CYBER<span>SECURITY</span>
+            </h3>
+
+
+            <p>
+                IDS & IPS — Detección y prevención
+                de intrusiones.
+            </p>
+
+
+            <p class="author">
+                Creado por:
+                <strong>
+                    Jorge Herazo
+                </strong>
+            </p>
+
+        </div>
+
+
+        <div class="footer-badge">
+
+            🛡️ IDS
+            <span>+</span>
+            IPS
+
+        </div>
+
+
     </div>
 
-    <div class="footer-badge">
-      IDS <span>+</span> IPS
-    </div>
 
-  </div>
+    <div class="copyright">
+
+        © 2026 • Proyecto educativo de ciberseguridad
+
+    </div>
 
 </footer>
 
-<script src="script.js"></script>
 
 </body>
 </html>
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
-
-:root {
-  --bg: #071022;
-  --panel: #0d1730;
-  --text: #eef4ff;
-  --muted: #a9b7d3;
-  --cyan: #36e0c5;
-  --purple: #7c7cff;
-  --line: #253454;
-  --max: 1120px;
-}
-
-* {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background: #f6f8fc;
-  color: #17213a;
-  font-family: Inter, Arial, sans-serif;
-  line-height: 1.65;
-}
-
-.container {
-  width: min(var(--max), 92%);
-  margin: auto;
-}
-
-
-/* HERO */
-
-.hero {
-  min-height: 720px;
-  background:
-    radial-gradient(
-      circle at 80% 25%,
-      #192b64 0,
-      #0b1530 38%,
-      #050b19 100%
-    );
-  color: var(--text);
-  position: relative;
-  overflow: hidden;
-}
-
-.nav {
-  height: 82px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  font-family: "Space Grotesk";
-  font-weight: 700;
-  font-size: 20px;
-  color: white;
-  text-decoration: none;
-}
-
-.logo span {
-  color: var(--cyan);
-}
-
-.nav-links {
-  display: flex;
-  gap: 28px;
-}
-
-.nav-links a {
-  color: #cbd6ee;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.nav-links a:hover {
-  color: var(--cyan);
-}
-
-
-/* HERO CONTENT */
-
-.hero-content {
-  display: grid;
-  grid-template-columns: 1.05fr .95fr;
-  align-items: center;
-  min-height: 630px;
-  gap: 40px;
-}
-
-.eyebrow {
-  font-size: 12px;
-  letter-spacing: 2.2px;
-  font-weight: 800;
-  color: var(--cyan);
-  margin: 0 0 12px;
-}
-
-h1,
-h2,
-h3 {
-  font-family: "Space Grotesk", sans-serif;
-  line-height: 1.1;
-}
-
-h1 {
-  font-size: clamp(44px, 6vw, 74px);
-  margin: 0 0 24px;
-}
-
-h1 span {
-  color: var(--cyan);
-}
-
-.lead {
-  color: #b8c5df;
-  max-width: 650px;
-  font-size: 17px;
-}
-
-.hero-art svg {
-  width: 100%;
-}
-
-
-/* BOTONES */
-
-.hero-buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 30px;
-}
-
-.btn {
-  padding: 13px 20px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.primary {
-  background: var(--cyan);
-  color: #06121b;
-}
-
-.ghost {
-  border: 1px solid #40517a;
-  color: white;
-}
-
-
-/* SECCIONES */
-
-.section {
-  padding: 100px 0;
-}
-
-.section-title {
-  max-width: 760px;
-  margin-bottom: 42px;
-}
-
-.section-title > p:not(.eyebrow) {
-  color: #66738d;
-}
-
-h2 {
-  font-size: clamp(32px, 4vw, 48px);
-  margin: 0 0 15px;
-}
-
-h3 {
-  margin: 12px 0 10px;
-  font-size: 21px;
-}
-
-.center {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-/* TARJETAS */
-
-.cards {
-  display: grid;
-  gap: 22px;
-}
-
-.cards.two {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.cards.four {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.card,
-.mini-card,
-.threat {
-  background: white;
-  border: 1px solid #e1e7f0;
-  border-radius: 18px;
-  padding: 30px;
-  box-shadow: 0 14px 40px #24345c0b;
-}
-
-.icon {
-  width: 58px;
-  height: 58px;
-  border-radius: 15px;
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-}
-
-.cyan {
-  background: #36e0c51c;
-  color: #0aa88f;
-}
-
-.purple {
-  background: #7c7cff1a;
-  color: #5959d7;
-}
-
-.tag {
-  display: inline-block;
-  margin-top: 22px;
-  font-size: 10px;
-  letter-spacing: 1.2px;
-  font-weight: 800;
-  color: #68758d;
-  background: #f1f4f8;
-  padding: 7px 10px;
-  border-radius: 50px;
-}
-
-
-/* COMPARACIÓN */
-
-.dark-section {
-  background: var(--bg);
-  color: var(--text);
-}
-
-.dark-section .section-title > p:not(.eyebrow),
-.dark-section p {
-  color: var(--muted);
-}
-
-.comparison {
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.compare-head,
-.compare-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-}
-
-.compare-head {
-  background: #111d3b;
-  font-weight: 800;
-}
-
-.compare-head span,
-.compare-row > * {
-  padding: 18px 22px;
-}
-
-.compare-row {
-  border-top: 1px solid var(--line);
-  color: #c7d2e9;
-}
-
-.compare-row b {
-  color: var(--cyan);
-  text-align: center;
-}
-
-
-/* FUNCIONAMIENTO */
-
-.flow {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-  align-items: stretch;
-  gap: 12px;
-}
-
-.flow-step {
-  padding: 24px;
-  background: white;
-  border: 1px solid #e1e7f0;
-  border-radius: 16px;
-}
-
-.flow-step span {
-  font-size: 12px;
-  color: #716ff0;
-  font-weight: 800;
-}
-
-.flow-step p {
-  color: #69768d;
-  font-size: 14px;
-}
-
-.arrow {
-  display: grid;
-  place-items: center;
-  font-size: 28px;
-  color: #9aa6bb;
-}
-
-
-/* RED */
-
-.network-visual {
-  margin: 55px auto 0;
-  max-width: 820px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.node {
-  width: 150px;
-  height: 120px;
-  border: 1px solid #dce3ee;
-  border-radius: 18px;
-  background: white;
-  display: grid;
-  place-items: center;
-  font-size: 35px;
-  box-shadow: 0 12px 30px #24345c10;
-}
-
-.node small {
-  font-size: 13px;
-  font-weight: 700;
-  color: #65728a;
-}
-
-.shield {
-  border-color: var(--cyan);
-  background: #ecfffb;
-}
-
-.line {
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    #36e0c5,
-    #7c7cff
-  );
-  width: 100px;
-}
-
-
-/* TIPOS */
-
-.alt {
-  background: #eef2f8;
-}
-
-.mini-card span {
-  font-size: 11px;
-  color: #6d6de0;
-  font-weight: 800;
-}
-
-.mini-card p,
-.threat span {
-  font-size: 14px;
-  color: #68758d;
-}
-
-
-/* AMENAZAS */
-
-.threat-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-}
-
-.threat strong {
-  display: block;
-  font-family: "Space Grotesk";
-  font-size: 18px;
-  margin-bottom: 7px;
-}
-
-
-/* IMPORTANCIA */
-
-.benefits {
-  display: grid;
-  grid-template-columns: 1.3fr .7fr;
-  gap: 70px;
-  align-items: center;
-}
-
-.check-list {
-  display: grid;
-  gap: 13px;
-}
-
-.check-list div {
-  background: #101b37;
-  border: 1px solid #263554;
-  padding: 15px 18px;
-  border-radius: 10px;
-  color: #d9e3f7;
-}
-
-
-/* FUENTES */
-
-.sources a {
-  display: block;
-  color: #4657bd;
-  font-weight: 700;
-  margin: 12px 0;
-  text-decoration: none;
-}
-
-.sources a:hover {
-  text-decoration: underline;
-}
-
-
-/* FOOTER */
-
-footer {
-  background: #040915;
-  color: #8998b5;
-  padding: 35px 0;
-}
-
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-inner p {
-  margin: 4px 0;
-  font-size: 13px;
-}
-
-.footer-badge {
-  border: 1px solid #263554;
-  padding: 10px 15px;
-  border-radius: 50px;
-  color: white;
-}
-
-.footer-badge span {
-  color: var(--cyan);
-}
-
-
-/* RESPONSIVE */
-
-@media (max-width: 850px) {
-
-  .nav-links {
-    display: none;
-  }
-
-  .hero-content {
-    grid-template-columns: 1fr;
-    padding: 70px 0 90px;
-  }
-
-  .cards.two,
-  .cards.four,
-  .threat-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .flow {
-    grid-template-columns: 1fr;
-  }
-
-  .arrow {
-    transform: rotate(90deg);
-    height: 20px;
-  }
-
-  .benefits {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-}
-
-
-@media (max-width: 560px) {
-
-  .section {
-    padding: 70px 0;
-  }
-
-  .cards.two,
-  .cards.four,
-  .threat-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .compare-head,
-  .compare-row {
-    grid-template-columns: 1.5fr .7fr .7fr;
-    font-size: 13px;
-  }
-
-  .compare-head span,
-  .compare-row > * {
-    padding: 14px 10px;
-  }
-
-  .network-visual {
-    flex-direction: column;
-  }
-
-  .line {
-    width: 3px;
-    height: 50px;
-  }
-
-  .hero-buttons {
-    flex-wrap: wrap;
-  }
-}
-
-
-
-const links = document.querySelectorAll(".nav-links a");
-
-const sections = [
-  ...document.querySelectorAll("main section[id]")
-];
-
-const observer = new IntersectionObserver(
-  entries => {
-
-    entries.forEach(entry => {
-
-      if (entry.isIntersecting) {
-
-        links.forEach(link => {
-
-          if (
-            link.getAttribute("href") ===
-            "#" + entry.target.id
-          ) {
-
-            link.style.color = "#36e0c5";
-
-          } else {
-
-            link.style.color = "";
-
-          }
-
-        });
-
-      }
-
-    });
-
-  },
-  {
-    rootMargin: "-35% 0px -55% 0px"
-  }
-);
-
-sections.forEach(section => {
-  observer.observe(section);
-});
